@@ -18,14 +18,13 @@ class Migration(SchemaMigration):
 
         # copy ForeignKey to m2m
         if not db.dry_run:
-            for set in orm.Setting.objects.all():
+            for set in orm['conf.Setting'].objects.all():
                 set.sites.add(set.site)
                 set.save()
 
     def backwards(self, orm):
         # Removing M2M table for field sites on 'Setting'
         db.delete_table('conf_setting_sites')
-
 
     models = {
         'conf.setting': {

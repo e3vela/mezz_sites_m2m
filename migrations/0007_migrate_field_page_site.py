@@ -16,18 +16,16 @@ class Migration(SchemaMigration):
             ('site', models.ForeignKey(orm['sites.site'], null=False))
         ))
         db.create_unique('pages_page_sites', ['page_id', 'site_id'])
-        
+
         # copy ForeignKey to m2m
         if not db.dry_run:
-            for page in orm.Page.objects.all():
+            for page in orm['pages.Page'].objects.all():
                 page.sites.add(page.site)
                 page.save()
-                
 
     def backwards(self, orm):
         # Removing M2M table for field sites on 'Page'
         db.delete_table('pages_page_sites')
-
 
     models = {
         'contenttypes.contenttype': {

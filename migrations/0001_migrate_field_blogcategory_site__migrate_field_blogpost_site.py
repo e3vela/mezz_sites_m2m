@@ -18,7 +18,7 @@ class Migration(SchemaMigration):
 
         # copy ForeignKey to m2m
         if not db.dry_run:
-            for cat in orm.BlogCategory.objects.all():
+            for cat in orm['blog.BlogCategory'].objects.all():
                 cat.sites.add(cat.site)
                 cat.save()
 
@@ -32,7 +32,7 @@ class Migration(SchemaMigration):
 
         # copy ForeignKey to m2m
         if not db.dry_run:
-            for post in orm.BlogPost.objects.all():
+            for post in orm['blog.BlogPost'].objects.all():
                 post.sites.add(post.site)
                 post.save()
 
@@ -42,7 +42,6 @@ class Migration(SchemaMigration):
 
         # Removing M2M table for field sites on 'BlogPost'
         db.delete_table('blog_blogpost_sites')
-
 
     models = {
         'auth.group': {

@@ -18,14 +18,13 @@ class Migration(SchemaMigration):
 
         # copy ForeignKey to m2m
         if not db.dry_run:
-            for keyword in orm.Keyword.objects.all():
+            for keyword in orm['generic.Keyword'].objects.all():
                 keyword.sites.add(keyword.site)
                 keyword.save()
 
     def backwards(self, orm):
         # Removing M2M table for field sites on 'Keyword'
         db.delete_table('generic_keyword_sites')
-
 
     models = {
         'auth.group': {
